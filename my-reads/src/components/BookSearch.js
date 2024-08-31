@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDebounce } from 'use-debounce';
-import * as BookAPI from '../API/BooksAPI';
+import * as BookAPI from './BooksAPI';
 import { SHELVES, SEARCH_PLACEHOLDER, NO_BOOKS_FOUND, NOT_FOUND_TEXT } from '../constants/constants';
 
 const BookSearch = ({ onChangeShelf, books }) => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDebounce } from 'use-debounce';
 import * as BookAPI from '../API/BooksAPI';
-import { SHELVES, SEARCH_PLACEHOLDER, NO_BOOKS_FOUND, NOT_FOUND_TEXT } from '../constants/constants';
+import { SHELVES, SEARCH_PLACEHOLDER, NO_BOOKS_FOUND, NOT_FOUND_TEXT, INPUT_TEXT_EMPTY } from '../constants/constants';
 
 const BookSearch = ({ onChangeShelf, books }) => {
   const [query, setQuery] = useState("");
@@ -84,7 +84,7 @@ const BookSearch = ({ onChangeShelf, books }) => {
               ))}
             </ol>
           ) : (
-            <p className='notFound'>{NO_BOOKS_FOUND}</p>
+            query === "" ? <p className='notFound'>{INPUT_TEXT_EMPTY}</p>: <p className='notFound'>{NO_BOOKS_FOUND}</p>
           )}
         </div>
       </div>

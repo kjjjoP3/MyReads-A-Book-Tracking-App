@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useDebounce } from 'use-debounce';
-import * as BookAPI from '../API/BooksAPI';
-import { SHELVES, SEARCH_PLACEHOLDER, NO_BOOKS_FOUND, NOT_FOUND_TEXT, INPUT_TEXT_EMPTY } from '../constants/constants';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useDebounce } from "use-debounce";
+import * as BookAPI from "../API/BooksAPI";
+import {
+  SHELVES,
+  SEARCH_PLACEHOLDER,
+  NO_BOOKS_FOUND,
+  NOT_FOUND_TEXT,
+  INPUT_TEXT_EMPTY,
+} from "../constants/constants";
 
 const BookSearch = ({ onChangeShelf, books }) => {
   const [query, setQuery] = useState("");
   const [bookList, setBookList] = useState([]);
   const [debouncedQuery] = useDebounce(query, 500);
-  
+
   useEffect(() => {
     const fetchSearchResults = async () => {
       if (debouncedQuery) {
@@ -16,7 +22,7 @@ const BookSearch = ({ onChangeShelf, books }) => {
         if (results && !results.error) {
           const updatedBooks = results.map((book) => {
             const matchingBook = books.find((b) => b.id === book.id);
-            book.shelf = matchingBook ? matchingBook.shelf : 'none';
+            book.shelf = matchingBook ? matchingBook.shelf : "none";
             return book;
           });
           setBookList(updatedBooks);
@@ -35,7 +41,9 @@ const BookSearch = ({ onChangeShelf, books }) => {
     <div>
       <div className="search-books">
         <div className="search-books-bar">
-          <Link className="close-search" to="/">Close</Link>
+          <Link className="close-search" to="/">
+            Close
+          </Link>
           <div className="search-books-input-wrapper">
             <input
               type="text"
@@ -59,12 +67,12 @@ const BookSearch = ({ onChangeShelf, books }) => {
                           height: 193,
                           backgroundImage: book.imageLinks
                             ? `url(${book.imageLinks.thumbnail})`
-                            : 'none',
+                            : "none",
                         }}
                       ></div>
                       <div className="book-shelf-changer">
                         <select
-                          value={book.shelf || 'none'}
+                          value={book.shelf || "none"}
                           onChange={(e) => onChangeShelf(book, e.target.value)}
                         >
                           <option disabled>Move to...</option>
@@ -78,13 +86,17 @@ const BookSearch = ({ onChangeShelf, books }) => {
                       </div>
                     </div>
                     <div className="book-title">{book.title}</div>
-                    <div className="book-authors">{book.authors?.join(', ') || NOT_FOUND_TEXT}</div>
+                    <div className="book-authors">
+                      {book.authors?.join(", ") || NOT_FOUND_TEXT}
+                    </div>
                   </div>
                 </li>
               ))}
             </ol>
           ) : (
-            query === "" ? <p className='notFound'>{INPUT_TEXT_EMPTY}</p>: <p className='notFound'>{NO_BOOKS_FOUND}</p>
+            <p className="notFound">
+              {query === "" ? INPUT_TEXT_EMPTY : NO_BOOKS_FOUND}
+            </p>
           )}
         </div>
       </div>

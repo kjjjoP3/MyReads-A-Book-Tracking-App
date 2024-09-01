@@ -37,19 +37,6 @@ This will open the app in your default browser at http://localhost:3000.
     Click the "Add a book" button to search for new books.
     Use the shelf selector to move books between categories.
 
-**Folder Structure**
-  my-reads/
-  │
-  ├── public/               # Static assets
-  ├── src/                  # Application source code
-  │   ├── components/       # Reusable UI components
-  │   ├── API/              # API calls to manage books
-  │   ├── constants/        # Constants used throughout the app
-  │   ├── App.js            # Main component
-  │   └── index.js          # Entry point of the app
-  ├── package.json          # Project metadata and dependencies
-  └── README.md             # Project documentation
-  
 **Contributing**
   Contributions are welcome! If you want to contribute to MyReads, feel free to fork the repository, create a new branch, and submit a pull request. You can also report issues or suggest new features.
 

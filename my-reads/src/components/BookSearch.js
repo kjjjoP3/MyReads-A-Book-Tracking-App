@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDebounce } from "use-debounce";
+import { debounce, throttle } from "lodash";
 import * as BookAPI from "../API/BooksAPI";
 import {
   SHELVES,
@@ -13,29 +13,44 @@ import {
 const BookSearch = ({ onChangeShelf, books }) => {
   const [query, setQuery] = useState("");
   const [bookList, setBookList] = useState([]);
-  const [debouncedQuery] = useDebounce(query, 500);
+  const [isLoading, setIsLoading] = useState(false);
+  const [lastQuery, setLastQuery] = useState("");
 
-  useEffect(() => {
-    const fetchSearchResults = async () => {
-      if (debouncedQuery) {
-        const results = await BookAPI.search(debouncedQuery, 20);
-        if (results && !results.error) {
-          const updatedBooks = results.map((book) => {
-            const matchingBook = books.find((b) => b.id === book.id);
-            book.shelf = matchingBook ? matchingBook.shelf : "none";
-            return book;
-          });
-          setBookList(updatedBooks);
-        } else {
-          setBookList([]);
-        }
+  const fetchSearchResults = async (debouncedQuery) => {
+    if (debouncedQuery && debouncedQuery !== lastQuery) {
+      setIsLoading(true);
+      const results = await BookAPI.search(debouncedQuery, 20);
+      if (results && !results.error) {
+        const updatedBooks = results.map((book) => {
+          const matchingBook = books.find((b) => b.id === book.id);
+          book.shelf = matchingBook ? matchingBook.shelf : "none";
+          return book;
+        });
+        setBookList(updatedBooks);
       } else {
         setBookList([]);
       }
+      setIsLoading(false);
+      setLastQuery(debouncedQuery);
+    } else if (!debouncedQuery) {
+      setBookList([]);
+      setLastQuery("");
+    }
+  };
+
+  const throttledFetchSearchResults = throttle(fetchSearchResults, 1000);
+
+  const handleInputChange = debounce((input) => {
+    setQuery(input);
+  }, 500);
+
+  useEffect(() => {
+    throttledFetchSearchResults(query);
+    
+    return () => {
+      throttledFetchSearchResults.cancel();
     };
-    fetchSearchResults();
-    return () => setBookList([]);
-  }, [debouncedQuery, books]);
+  }, [query, throttledFetchSearchResults]);
 
   return (
     <div>
@@ -48,13 +63,14 @@ const BookSearch = ({ onChangeShelf, books }) => {
             <input
               type="text"
               placeholder={SEARCH_PLACEHOLDER}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => handleInputChange(e.target.value)}
             />
           </div>
         </div>
         <div className="search-books-results">
-          {bookList.length > 0 ? (
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : bookList.length > 0 ? (
             <ol className="books-grid">
               {bookList.map((book) => (
                 <li key={book.id}>

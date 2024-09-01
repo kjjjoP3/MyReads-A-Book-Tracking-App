@@ -1,7 +1,3 @@
-Apologies for the misunderstanding! Here's the formatted text that you can directly copy into your README.md file in your GitHub repository:
-
-markdown
-Copy code
 # MyReads: A Book Tracking App
 
 Welcome to **MyReads**, a simple yet powerful book tracking application built with React! This app allows you to manage your reading lists, categorize books into different shelves, and search for new titles to add to your collection.

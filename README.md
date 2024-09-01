@@ -20,25 +20,28 @@ To get started with MyReads, follow these steps:
    Clone this repository to your local machine using the following command:
    ```bash
    git clone https://github.com/your-username/my-reads.git](https://github.com/kjjjoP3/MyReads-A-Book-Tracking-App.git
-2. **Navigate to the Project Directory
+2. **Navigate to the Project Directory**  
     Change into the project directory:    
-    cd my-reads
+   ```bash
+   cd my-reads
 
-3. **Install Dependencies
+4. **Install Dependencies**
     Install the necessary dependencies:
-    npm install
+   ```bash 
+   npm install
 
-4. **Start the Application
+5. **Start the Application**
     Start the development server:
-    npm start
-   This will open the app in your default browser at http://localhost:3000.
+   ```bash 
+   npm start   
+This will open the app in your default browser at http://localhost:3000.
 
-5. **Explore the App
+6. **Explore the App**
     Browse your current shelves on the main page.
     Click the "Add a book" button to search for new books.
     Use the shelf selector to move books between categories.
 
-Folder Structure
+**Folder Structure**
   my-reads/
   │
   ├── public/               # Static assets
@@ -51,8 +54,8 @@ Folder Structure
   ├── package.json          # Project metadata and dependencies
   └── README.md             # Project documentation
   
-Contributing
+**Contributing**
   Contributions are welcome! If you want to contribute to MyReads, feel free to fork the repository, create a new branch, and submit a pull request. You can also report issues or suggest new features.
 
-License
+**License**
   This project is licensed under the MIT License. See the LICENSE file for more details.
